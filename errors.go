@@ -16,6 +16,7 @@ func Try(err error) {
 	doPanic(err)
 }
 
+// This allocated way more because of the call to runtime.Caller.
 func doPanic(err error) {
 	if err != nil {
 		_, file, no, ok := runtime.Caller(2)
@@ -24,6 +25,14 @@ func doPanic(err error) {
 		}
 
 		panic(err)
+	}
+}
+
+func RecoverHandler(handlers ...func(r interface{})) {
+	if r := recover(); r != nil {
+		for _, v := range handlers {
+			v(r)
+		}
 	}
 }
 
