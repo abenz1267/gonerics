@@ -2,6 +2,7 @@ package gonerics
 
 import (
 	"fmt"
+	"log"
 	"runtime"
 )
 
@@ -23,5 +24,23 @@ func doPanic(err error) {
 		}
 
 		panic(err)
+	}
+}
+
+func RecoverPrint() {
+	if r := recover(); r != nil {
+		log.Println(r)
+	}
+}
+
+func RecoverPanic() {
+	if r := recover(); r != nil {
+		panic(r)
+	}
+}
+
+func RecoverFatal() {
+	if r := recover(); r != nil {
+		log.Fatal(r)
 	}
 }
